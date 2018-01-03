@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title></title>
+		<style media="screen">
+			.hi-content {
+				width: 100%;
+				height: 25rem;
+				line-height: 2;
+				overflow: auto;
+				overflow-x: hidden;
+				padding: 10px;
+			}
+		</style>
+		<link rel="stylesheet" type="text/css" href="../../zui/css/mzui.css"/>
+	</head>
+	<body>
+		<div id="app" class="affix modal">
+			<div class="heading">
+				<div class="title">
+					<input class="input" style="border:none;" v-model="problem.title" placeholder="标题">
+				</div>
+			</div>
+			<div class="divider"></div>
+			<div class="content has-padding" >
+				<div contentEditable="true" class="hi-content">
+					请书写内容。。。。。。。
+				</div>
+			</div>
+			<nav class="fab affix dock-bottom dock-right shadow-none dock-auto">
+				<a class="btn circle shadow-2 has-margin-sm" v-bind:class="lock.color" @click="unlock()"><i class="icon" v-bind:class="lock.icon"></i></a>
+				<a class="btn circle shadow-2 has-margin-sm  red" @click="selectImg()"><i class="icon icon-picture"></i></a>
+				<a class="btn circle shadow-2 has-margin-sm blue" @click="publish()"><i class="icon-check"></i>发布</a>
+			</nav>
+		</div>
+	</body>
+	<script src="../../script/api.js" charset="utf-8"></script>
+	<script src="../api/api.js" charset="utf-8"></script>
+	<script src="../../script/vue.js" charset="utf-8"></script>
+	<script src="../../script/layer.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		var photoSelect = null;
+		var model = null;
+		var query = null;
+		apiready = function() {
+			model = api.require('model');
+			query = api.require('query');
+			photoSelect = api.require('photoSelect');
+			model.config({
+				appKey : 'E8D5FCA6-B96C-0755-D177-1BC3254CF38D',
+				host : 'https://d.apicloud.com'
+			});
+		};
+		var app = new Vue({
+			el : '#app',
+			data : {
+				problem : {
+					title : '',
+					content : '',
+					author : $api.getStorage('user').id,
+					like : 0,
+					store : 0,
+					view : 0,
+					status : 1,
+					type : 1,
+					isStart : 1,
+					img : []
+				},
+				lock : {
+					change : false,
+					color : 'red',
+					icon : 'icon-lock'
+				}
+			},
+			methods : {
+			    clean: function(){
+			       this.probelm ={
+					title : '',
+					content : '',
+					author : $api.getStorage('user').id,
+					like : 0,
+					store : 0,
+					view : 0,
+					type : 1,
+					img : []
+				};
+			    },
+				publish : function() {
+					var content = document.getElementsByClassName('hi-content')[0].innerHTML;
+					if (this.problem.title == '') {
+						layer.open({
+							content : '请输入标题',
+							skin : 'msg',
+							time : 2 //2秒后自动关闭
+						});
+					}
+					if (content == '') {
+						layer.open({
+							content : '请输入问题描述',
+							skin : 'msg',
+							time : 2 //2秒后自动关闭
+						});
+					}
+					if (this.problem.title != '' && content != '') {
+						api.showProgress({
+							text : '稍等一会...',
+							modal : true
+						});
+						for (var i = 0; i < this.problem.img; i++) {
+							if (content.indexOf(this.problem.img[i]) < 0) {
+								this.problem.img.splice(i, 1);
+							}
+						}
+						this.problem.content = content;
+						var _this = this;
+						save('article', _this.problem, function(ret, err) {
+							if (err) {
+								layer.open({
+									content : '好像出了点问题哦',
+									skin : 'msg',
+									time : 2 //2秒后自动关闭
+								});
+								api.hideProgress();
+							} else {
+								api.hideProgress();
+								_this.clean();
+								api.openWin({
+									name : '文章列表',
+									url : 'book.html'
+								});
+							}
+						});
+					}
+				},
+				unlock : function() {
+					this.lock.change = !this.lock.change;
+					if (this.lock.change) {
+						this.lock.color = 'green';
+						this.lock.icon = 'icon-unlock-alt';
+						this.problem.type = 2;
+					} else {
+						this.lock.color = 'red';
+						this.lock.icon = 'icon-lock';
+						this.problem.type = 1;
+					}
+				},
+				selectImg : function() {
+					var _this = this;
+					photoSelect.openAblum({
+						permitnum : '1'
+					}, function(ret, err) {
+						if (err) {
+							alert(JSON.stringify(err));
+						} else {
+							uploadFile(ret.selectpic[0], function(ret, err) {
+								if (err) {
+								} else {
+									_this.problem.img.push(ret.url);
+									document.getElementsByClassName('hi-content')[0].innerHTML += '<br><img src="' + ret.url + '"/>';
+								}
+							})
+						}
+					});
+				}
+			}
+		})
+	</script>
+</html>

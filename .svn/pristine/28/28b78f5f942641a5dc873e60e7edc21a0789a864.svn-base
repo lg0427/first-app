@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<link rel="stylesheet" type="text/css" href="../../zui/css/mzui.css">
+		<title>title</title>
+		<style>
+			body {
+				background-image: url('../../icon/b2.jpg');
+				background-repeat: no-repeat;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+				background-color: #915906;
+			}
+			.word {
+				text-align: center;
+				color: #A7ADA3;
+				font-size: 20px;
+				font-weight: bold;
+				bottom: 1%;
+				position: fixed;
+				height: 30%;
+				padding: 3px;
+			}
+			.main {
+				height: 100%;
+				width: auto;
+			}
+			.edit{
+			   margin:1rem;
+			}
+		</style>
+	</head>
+	<body>
+	    <div class="pull-right circle info btn edit" onclick="op()"><i class="icon icon-key"></i></div>
+		<div class="word">
+			<blockquote>
+				现实中生活中我们遇到的有关亲情、爱情、家庭、梦想、未来等各式各样的烦恼,别人也许已经经历过,说不定就会有个陌生人可以解答你的疑惑
+				——解忧杂货店
+			</blockquote>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+		};
+		function op(){
+		  api.openWin({
+	          name: '解惑',
+	          url: 'store.html'
+          });
+		}
+	</script>
+</html>

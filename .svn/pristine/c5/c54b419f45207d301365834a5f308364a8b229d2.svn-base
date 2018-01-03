@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<title>APICloud APP</title>
+		<link rel="stylesheet" type="text/css" href="../../css/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<style>
+		</style>
+	</head>
+	<body>
+		<div class="wrap" id="app">
+			<div class="form-main">
+				<ul>
+					<li>
+						<i class="form-icon icon-phone"></i>
+						<input type="text" v-model="phone" placeholder="输入你的手机号">
+					</li>
+					<li>
+						<i class="form-icon icon-lock"></i>
+						<input type="password" v-model="password" placeholder="请输入密码">
+					</li>
+				</ul>
+			</div>
+			<a @click="login()" class="btn-big"><font>登 录</font></a>
+			<div class="reg-bot-link">
+				<span><a href="javascript:void(0)" onclick="register()"><font>注册新用户</font></a></span>
+				<a href="javascript:void(0)" onclick="forget()"><font>忘记密码</font></a>
+			</div>
+			<div class="login-sns">
+				<div class="login-sns-main">
+					<div class="login-sns-title">
+						<span><font>使用第三方软件登录</font></span>
+					</div>
+					<div class="login-sns-list">
+						<ul>
+							<li>
+								<i class="icon-weixin"></i>
+								<font>微信</font>
+							</li>
+							<li>
+								<i class="icon-QQ"></i>
+								<font>QQ</font>
+							</li>
+							<li>
+								<i class="icon-weibo"></i>
+								<font>微博</font>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<div class="login-reg-link">
+			<p>
+				请认真阅读<a href="#">用户协议</a>
+			</p>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/vue.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+		};
+		var app = new Vue({
+			el : '#app',
+			data : {
+				phone : '',
+				password : ''
+			},
+			methods : {
+				login : function() {
+					if (this.phone == '') {
+						alert('请输入电话号码')
+					}
+					if (this.password == '') {
+						alert('请输入密码')
+					}
+					if (this.phone != '' && this.password != '') {
+					  //做登陆处理
+					}
+				}
+			}
+		});
+		function forget() {
+			api.openWin({
+				name : 'forgetWin',
+				url : '../forget/forget_win.html'
+			});
+		}
+
+		function register() {
+			api.openWin({
+				name : 'registerWin',
+				url : '../register/register_win.html'
+			});
+		}
+	</script>
+</html>

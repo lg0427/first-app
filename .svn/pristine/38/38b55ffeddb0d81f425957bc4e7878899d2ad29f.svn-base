@@ -1,0 +1,297 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<title>APICloud APP</title>
+		<link rel="stylesheet" type="text/css" href="../../css/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/layer.css" />
+		<style>
+		</style>
+	</head>
+	<body></body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript">
+		var storage = null;
+		var NVTabBar = null;
+		var MNActionButton = null;
+		apiready = function() {
+			NVTabBar = api.require('NVTabBar');
+			storage = $api.getStorage('user');
+			MNActionButton = api.require('MNActionButton');
+			if (!storage) {
+				api.openWin({
+					name : 'loginWin',
+					url : 'login/login_win.html'
+				});
+			}
+			initWindow();
+			initFrame();
+			//设置 不再返回
+			api.addEventListener({
+				name : 'keyback'
+			}, function(ret, err) {
+				if (ret) {
+					api.closeWidget({
+						id : 'A6065911682998', //这里改成自己的应用ID
+						retData : {
+							name : 'closeWidget'
+						},
+						silent : false
+					});
+				}
+			});
+		};
+		function initWindow() {//初始话窗口
+			NVTabBar.open({
+				styles : {
+					bg : '#FFFAF',
+					h : 55,
+					dividingLine : {
+						width : 0,
+						color : '#eee'
+					},
+					badge : {
+						bgColor : '#ff0',
+						numColor : '#fff',
+						size : 6.0,
+						centerX : 40,
+						centerY : 6
+					}
+				},
+				items : [{
+					w : api.winWidth / 5.0,
+					bg : {
+						marginB : 0,
+						image : 'rgb(255,250,250)'
+					},
+					iconRect : {
+						w : 25.0,
+						h : 25.0,
+					},
+					icon : {
+						normal : 'widget://images/icon-nav-team.png',
+						highlight : 'widget://images/icon-nav-team.png',
+						selected : 'widget://images/icon-nav-team-on.png'
+					},
+					title : {
+						text : '杂货铺',
+						size : 10.0,
+						normal : '#000',
+						selected : '#EE634C',
+						marginB : 6.0
+					}
+				}, {
+					w : api.winWidth / 5.0,
+					bg : {
+						marginB : 0,
+						image : 'rgb(255,250,250)'
+					},
+					iconRect : {
+						w : 25.0,
+						h : 25.0,
+					},
+					icon : {
+						normal : 'widget://images/icon-nav-home.png',
+						highlight : 'widget://images/icon-nav-home.png',
+						selected : 'widget://images/icon-nav-home-on.png'
+					},
+					title : {
+						text : '发现',
+						size : 10.0,
+						normal : '#000',
+						selected : '#EE634C',
+						marginB : 6.0
+					}
+				}, {
+					w : api.winWidth / 5.0,
+					bg : {
+						marginB : 0,
+						image : 'rgb(255,250,250)' //中间背景图
+					},
+					iconRect : {
+						w : 40,
+						h : 52,
+					},
+					icon : {
+						normal : 'widget://images/add3.png',
+						highlight : 'widget://images/add3.png',
+						selected : 'widget://images/add3.png'
+					},
+					title : {
+						text : '',
+						size : 0.0,
+						normal : '#000',
+						selected : '#EE634C',
+						marginB : 0
+					}
+				}, {
+					w : api.winWidth / 5.0,
+					bg : {
+						marginB : 0,
+						image : 'rgb(255,250,250)'
+					},
+					iconRect : {
+						w : 25.0,
+						h : 25.0,
+					},
+					icon : {
+						normal : 'widget://images/icon-nav-message.png',
+						highlight : 'widget://images/icon-nav-message.png',
+						selected : 'widget://images/icon-nav-message-on.png'
+					},
+					title : {
+						text : '消息',
+						size : 10.0,
+						normal : '#000',
+						selected : '#EE634C',
+						marginB : 6.0
+					}
+				}, {
+					w : api.winWidth / 5.0,
+					bg : {
+						marginB : 0,
+						image : 'rgb(255,250,250)'
+					},
+					iconRect : {
+						w : 25.0,
+						h : 25.0,
+					},
+					icon : {
+						normal : 'widget://images/icon-nav-user.png',
+						highlight : 'widget://images/icon-nav-user.png',
+						selected : 'widget://images/icon-nav-user-on.png'
+					},
+					title : {
+						text : '我的',
+						size : 10.0,
+						normal : '#000',
+						selected : '#EE634C',
+						marginB : 6.0
+					}
+				}],
+				selectedIndex : 1
+			}, function(ret, err) {
+				if (ret.eventType == 'show') {
+					api.setFrameGroupIndex({
+						name : '首页',
+						index : 1
+					});
+				} else {
+					//特殊 菜单
+					if (ret.index == 2) {
+					  openActionMenu();
+					} else {
+						//操作其他页面
+						api.setFrameGroupIndex({
+							name : '首页',
+							index : ret.index
+						});
+					}
+				}
+			});
+		}
+
+		//初始话首页frame只打开一个frame 提高性能（不知道是否提高）
+		function initFrame() {
+			api.openFrameGroup({
+				name : '首页',
+				scrollEnabled : false,
+				rect : {
+					x : 0,
+					y : 0,
+					w : api.frameWidth,
+					h : api.frameHeight - 55
+				},
+				frames : [{
+					name : '杂货铺',
+					url : 'store1.html'
+				}, {
+					name : '发现',
+					url : 'find.html'
+				}, {
+					name : '发布',
+					url : 'post.html'
+				}, {
+					name : '消息',
+					url : 'mess.html'
+				}, {
+					name : '我的',
+					url : 'profile.html'
+				}],
+				index : 1
+			}, function(ret, err) {
+			});
+		}
+
+		function openActionMenu() {
+			MNActionButton.open({
+				layout : {
+					row : 1,
+					col : 3,
+					rowSpacing : api.winHeight/2,
+					colSpacing : 10,
+					offset : 0
+				},
+				animation : true,
+				autoHide : true,
+				styles : {
+					maskBg : '#fff',
+					bg : '#fff',
+					cancelButton : {
+						size : 48,
+						bg : '#fff',
+						icon: 'widget://icon/cancel.png',
+					},
+					item : {
+						titleColor : '#888',
+						titleHighlight : 'dd2727',
+						titleSize : 12
+					},
+					indicator : {
+						color : '#c4c4c4',
+						highlight : '#9e9e9e'
+					}
+				},
+				items : [{
+					icon : 'widget://icon/help.png',
+					highlight : 'widget://icon/help.png',
+					title : '寻求解惑'
+				}, {
+					icon : 'widget://icon/fabu.png',
+					highlight : 'widget://icon/fabu.png',
+					title : '记日记'
+				}, {
+					icon : 'widget://icon/chuangzuo.png',
+					highlight : 'widget://icon/chuangzuo.png',
+					title : '写文章'
+				}]
+			}, function(ret) {
+				if (ret) {
+					
+                    if(ret.index == 0){
+                       api.openWin({
+	                       name: '说问题',
+	                       url: '../problem/write.html'
+	                       
+                       });
+                    }else if(ret.index == 1){
+                       api.openWin({
+	                       name: '记日记',
+	                       url: '../day/write.html'
+	                       
+                       });
+                    }else if(ret.index == 2){
+                       api.openWin({
+                       
+	                       name: '写文章',
+	                       url: '../book/write.html'
+	                       
+                       });
+                    }
+				}
+			});
+		}
+	</script>
+</html>

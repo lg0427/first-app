@@ -1,0 +1,210 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>APICloud APP</title>
+        <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+        <style>
+        
+        </style>
+    </head>
+
+    <body>
+       
+    </body> 
+    
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript">
+        var storage = null;
+        var NVTabBar = null;
+        apiready = function() {
+           NVTabBar = api.require('NVTabBar');
+           storage = $api.getStorage('user');
+           if(!storage){
+             api.openWin({
+	             name: 'loginWin',
+	             url: 'login/login_win.html'
+             });
+           }
+          initWindow();
+           //设置 不再返回
+          api.addEventListener({
+                name:'keyback'
+              },function(ret,err){
+    
+             });
+        };
+        
+function initWindow(){ //初始话窗口
+  NVTabBar.open({
+    styles: {
+        bg: '#fff',
+        //bg:"widget://image/NVTabBar/tabbar_bg.png",
+        h: 65,
+        dividingLine: {
+            width: 0,
+            color: '#eee'
+        },
+        badge: {
+            bgColor: '#ff0',
+            numColor: '#fff',
+            size: 6.0,
+            centerX: 40,
+            centerY: 6
+        }
+    },
+    items: [{
+        w: api.winWidth / 5.0,
+        bg: {
+            marginB: 0,
+            image: 'rgba(200,200,200,0.6)'
+        },
+        iconRect: {
+            w: 25.0,
+            h: 25.0,
+        },
+        icon: {
+            normal: 'widget://images/icon-nav-home.png',
+            highlight: 'widget://images/icon-nav-home.png',
+            selected: 'widget://images/icon-nav-home-on.png'
+        },
+        title: {
+            text: '杂货铺',
+            size: 12.0,
+            normal: '#000',
+            selected: '#EE634C',
+            marginB: 6.0
+        }
+    }, {
+        w: api.winWidth / 5.0,
+        bg: {
+            marginB: 0,
+            image: 'rgba(200,200,200,0.7)'
+        },
+        iconRect: {
+            w: 25.0,
+            h: 25.0,
+        },
+        icon: {
+            normal: 'widget://images/icon-nav-team.png',
+            highlight: 'widget://images/icon-nav-team.png',
+            selected: 'widget://images/icon-nav-team-on.png'
+        },
+        title: {
+            text: '发现',
+            size: 12.0,
+            normal: '#000',
+            selected: '#EE634C',
+            marginB: 6.0
+        }
+    }, {
+        w: api.winWidth / 5.0,
+        bg: {
+            marginB: 10,
+            image: 'widget://image/NVTabBar/yyuan.png' //中间背景图
+        },
+        iconRect: {
+            w: 32,
+            h: 32,
+        },
+        icon: {
+            normal: 'widget://images/icon-nav-add.png',
+            highlight: 'widget://images/icon-nav-add.png',
+            selected: 'widget://images/icon-nav-add-on.png'
+        },
+        title: {
+            //text : '333',
+            size: 0.0,
+            normal: '#000',
+            selected: '#EE634C',
+            marginB: 0
+        }
+    }, {
+        w: api.winWidth / 5.0,
+        bg: {
+            marginB: 0,
+            image: 'rgba(200,20,0,0.6)'
+        },
+        iconRect: {
+            w: 25.0,
+            h: 25.0,
+        },
+        icon: {
+            normal: 'widget://images/icon-nav-message.png',
+            highlight: 'widget://images/icon-nav-message.png',
+            selected: 'widget://images/icon-nav-message-on.png'
+        },
+        title: {
+            text: '消息',
+            size: 12.0,
+            normal: '#000',
+            selected: '#EE634C',
+            marginB: 6.0
+        }
+    }, {
+        w: api.winWidth / 5.0,
+        bg: {
+            marginB: 0,
+            image: 'rgba(220,0,220,0.7)'
+        },
+        iconRect: {
+            w: 25.0,
+            h: 25.0,
+        },
+        icon: {
+            normal: 'widget://images/icon-nav-user.png',
+            highlight: 'widget://images/icon-nav-user.png',
+            selected: 'widget://images/icon-nav-user-on.png'
+        },
+        title: {
+            text: '我的',
+            size: 12.0,
+            normal: '#000',
+            selected: '#EE634C',
+            marginB: 6.0
+        }
+    }],
+    selectedIndex: 1
+    }, function(ret, err) {
+     //操作其他页面
+        api.setFrameGroupIndex({
+            name: '首页',
+            index: ret.index
+         });
+     });
+     
+     //初始话首页frame只打开一个frame 提高性能（不知道是否提高）
+   api.openFrameGroup({
+    name: '首页',
+    rect: {
+        x: 0,
+        y: 0,
+        w: api.frameWidth,
+        h: api.frameHeight - 65
+    },
+    frames: [{
+        name: '杂货铺',
+        url: 'store.html'
+    }, {
+        name: '发现',
+        url: 'find.html'
+    },{
+        name: '发布',
+        url: 'post.html'
+    },{
+        name: '消息',
+        url: 'mess.html'
+    },{
+        name: '我的',
+        url: 'my.html'
+    }]
+}, function(ret, err) {
+    
+    
+    });
+ }   
+    </script>
+
+</html>

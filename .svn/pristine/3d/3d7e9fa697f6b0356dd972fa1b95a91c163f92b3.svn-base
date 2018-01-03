@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../zui/css/mzui.css"/>
+		<style>
+			body {
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+		   <textarea class="textarea" name="desc" rows="15" v-model="introduce" placeholder="最好150字以内"></textarea>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/vue.js"></script>
+	<script type="text/javascript" src="../api/api.js"></script>
+	<script type="text/javascript">
+	    var model = null;
+		var query = null;
+		apiready = function() {
+			query = api.require('query');
+			model = api.require('model');
+			model.config({
+				appKey : 'E8D5FCA6-B96C-0755-D177-1BC3254CF38D',
+				host : 'https://d.apicloud.com'
+			});
+			app.init();
+			
+		};
+		
+		var app = new Vue({
+		  el: '#app',
+		  data: {
+		    introduce: ''
+		  },
+		  methods: {
+		     init: function(){
+		       var _this = this;
+					findById('user', $api.getStorage('user').id, function(ret, err) {
+						if (err) {
+						} else {
+							_this.introduce = ret.introduce;
+						}
+					});
+		     },
+		     update: function(){
+		        if(this.introduce!=''){
+		           updateById('user',$api.getStorage('user').id,{introduce:this.introduce},function(ret,err){
+						if(err){
+						  }else{
+						  api.closeWin({
+                          });
+						}
+					})
+		        }
+		     }
+		  }
+		})
+	</script>
+</html>

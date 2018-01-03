@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<title>APICloud APP</title>
+		<link rel="stylesheet" type="text/css" href="../../css/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/layer.css" />
+		<style>
+		</style>
+	</head>
+	<body>
+		<div class="wrap" id="app">
+			<div class="form-main">
+				<ul>
+					<li>
+						<i class="form-icon icon-phone"></i>
+						<input type="text" v-model="phone" placeholder="输入你的手机号">
+					</li>
+					<li>
+						<i class="form-icon icon-globe"></i>
+						<input type="text" v-model="vers" placeholder="输入短信验证码">
+						<span @click="receive()" class="btn-form" v-bind:style="{'display': statu.send}"><font>接收验证码</font></span>
+						<span class="btn-form" v-bind:style="{'display': statu.num}"><font>{{s}}s</font></span>
+					</li>
+					<li>
+						<i class="form-icon icon-lock"></i>
+						<input type="text" v-model="password" placeholder="密码">
+					</li>
+				</ul>
+			</div>
+			<span @click="register()" class="btn-big"><font>注册</font></span>
+			<div class="reg-bot-link reg-link">
+				<input type="checkbox">
+				<font>我已阅读并同意 <a href="#">《用户使用条款和政策》</a></font>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/vue.js"></script>
+	<script type="text/javascript" src="../../script/layer.js"></script>
+	<script type="text/javascript">
+		var smsVerify = null;
+		var model = null;
+		apiready = function() {
+			smsVerify = api.require('smsVerify');
+			model = api.require('model');
+			model.config({
+				appKey : 'E8D5FCA6-B96C-0755-D177-1BC3254CF38D',
+				host : 'https://d.apicloud.com'
+			});
+			register();
+		};
+		// 初始化
+		function register() {
+			smsVerify.register(function(ret, err) {
+//				if (ret.status) {
+//					layer.open({
+//						content : '初始化成功',
+//						skin : 'msg',
+//						time : 2 //2秒后自动关闭
+//					});
+//				} else {
+//					layer.open({
+//						content : '初始化失败',
+//						skin : 'msg',
+//						time : 2 //2秒后自动关闭
+//					});
+//				}
+			});
+		}
+
+		var app = new Vue({
+			el : '#app',
+			data : {
+				phone : '',
+				password : '',
+				vers : '',
+				s : 60,
+				statu : {
+					send : '',
+					num : 'none'
+				}
+			},
+			methods : {
+				register : function() {
+					var _this = this;
+					if (this.phone != '' && this.password != '' && this.vers != '') {
+						smsVerify.verify({
+							phone : _this.phone,
+							code : _this.vers,
+							country:"86"
+						}, function(ret, err) {//注册
+							if (ret.status) {
+								model.insert({
+									class : 'user',
+									value : {
+										password : _this.password,
+										device : api.deviceModel,
+										mobile : _this.phone,
+										username : 'name'
+									}
+								}, function(ret, err) {
+									if (err) {//注册成功
+									    _this.phone = '';
+										_this.password = '';
+										_this.vers = '';
+										layer.open({
+											content : ' 注册失败',
+											skin : 'msg',
+											time : 2 //2秒后自动关闭
+										});
+									} else {
+									
+										api.openWin({
+											name : 'login_win',
+											url : '../login/login_win.html'
+										});
+										
+									}
+								});
+							} else {
+								layer.open({
+									content : err.code + ' 验证码或电话号码错误',
+									skin : 'msg',
+									time : 2 //2秒后自动关闭
+								});
+							}
+						});
+					} else {
+						layer.open({
+							content : '请输入相关信息',
+							skin : 'msg',
+							time : 2 //2秒后自动关闭
+						});
+					}
+				},
+				receive : function() {
+					var _this = this;
+					smsVerify.sms({
+						phone : _this.phone,
+						country:"86"
+					}, function(ret, err) {
+						if (ret.status) {//发送成功
+							_this.statu.send = 'none';
+							_this.statu.num = '';
+							var num = 0;
+							var i = setInterval(function() {
+								num++;
+								_this.s = _this.s - 1;
+								if (num == 60) {
+									clearInterval(i);
+									_this.statu.send = '';
+									_this.statu.num = 'none';
+									_this.s = 60;
+								}
+							}, 1000)
+						} else {
+						    var msg = "验证失败";
+						    if(err.code == '456'){
+						      msg = '电话号码不能为空';
+						    } else if(err.code == '457'){
+						      msg = '手机号码格式错误';
+						    }else if(err.code == '458'){
+						      msg = '手机号码在黑名单';
+						    }else if(err.code == '468'){
+						      msg = '验证码输入错误';
+						    }
+							layer.open({
+								content :  msg,
+								skin : 'msg',
+								time : 2 //2秒后自动关闭
+							});
+						}
+					});
+				}
+			}
+		});
+	</script>
+</html>

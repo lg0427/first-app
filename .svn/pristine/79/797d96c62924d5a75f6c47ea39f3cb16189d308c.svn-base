@@ -1,0 +1,129 @@
+//一些公共的api，简化代码
+
+function getPage(className,pageSize,pageNumber,callback){  //pageSize:每页数据量 pageNumber：页码 class:查询表名
+   query.createQuery(function( ret, err ){
+    if( err ){
+          
+    }else{
+         query.limit({
+           qid: ret.qid, 
+           value: pageSize
+         });
+         query.skip({
+            qid: ret.qid, 
+            value: (pageNumber-1)*pageSize
+          });
+          query.desc({
+              qid: ret.qid, 
+              column: 'createdAt'
+           });
+         model.findAll({
+           class: className,
+           qid: ret.qid
+           }, function( ret, err ){
+            callback(ret,err);
+           });
+    }
+});
+}
+
+function findByKey(className,column,value,callback){
+  query.createQuery(function( ret, err ){
+    if( err ){
+          
+    }else{
+        query.whereEqual({
+          qid: ret.qid,
+          column: column,
+          value: value
+        });
+         model.findAll({
+         class: className,
+         qid: ret.qid
+       }, function(ret,err){
+          callback(ret,err);
+       });
+    }
+});
+}
+
+function save(className,data,callback){
+  model.insert({
+    class: className,
+    value: data
+   }, function(ret, err){
+      callback(ret,err);
+   });
+}
+
+function findById(className,id,callback){
+  model.findById({
+    class: className,
+    id: id
+}, function(ret, err){
+   callback(ret, err);
+ });
+}
+
+function updateById(className,id,data,callback){
+model.updateById({
+    class: className,
+    id: id,
+    value: data
+}, function(ret, err){
+   callback(ret, err);
+  });
+}
+
+function deleteById(className,id,callback){
+model.deleteById({
+    class: className,
+    id: id
+}, function(ret, err){
+    callback(ret, err);
+  });
+}
+
+function logins(phone,password,callback){  //简单登陆
+   query.createQuery(function( ret, err ){
+    if( err ){
+          
+    }else{
+        query.whereEqual({
+          qid: ret.qid,
+          column: 'mobile',
+          value: phone
+        });
+        query.whereEqual({
+          qid: ret.qid,
+          column: 'passw',
+          value: password
+        });
+         model.findAll({
+         class: 'user',
+         qid: ret.qid
+       }, function(ret,err){
+          callback(ret,err);
+       });
+    }
+});
+}
+ 
+function findPassword(phone,password,callback){ //找回密码
+    findByKey('user','mobile',phone,function(ret,err){
+       if (err){
+         callback(null,err);
+       }else{
+         if(ret.length>0){  //修改密码
+            updateById('user',ret[0].id,{password:password},function(ret,err){
+               callback(ret,err);
+            })
+         }else{ //注册新帐号
+            save('user',{mobile:phone,password:password,username:'name',device:''},function(ret,err){
+            
+              callback(ret, err);
+            })
+         }
+       }
+    })
+}

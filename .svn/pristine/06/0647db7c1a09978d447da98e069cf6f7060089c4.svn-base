@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/main.css"/>
+    <style>
+    	body{
+    		
+    	}
+    </style>
+</head>
+<body>
+	 <div class="main">
+        <div class="hmc-grgn-kbw">
+            <div class="hmc-grgn-kbw-head">
+               <i class="icon-shoucang active"></i>
+                <div class="hmc-touxiang">
+                    <img src="../../images/hmc-touxiang.png" />
+                </div>
+                <div class="hmc-pub-about">
+                    <span class="hmc-pub-author">
+						张默心
+					</span>
+                    <span class="hmc-pub-time">
+						<font>9天前</font>
+					</span>
+                </div>
+            </div>
+            <p><font>乔尔乔·德·契里柯（1888—1978）出生于希腊。 契里柯早年在雅典学素描， 后又在雅典工艺学院学了四年绘画。 契里柯主要在慕尼黑受到最初的美术教育， 对德国世纪末画家斐克林、克林格尔等人的作品深为喜爱。</font>
+            <p><font>乔尔乔·德·契里柯（1888—1978）出生于希腊。 契里柯早年在雅典学素描， 后又在雅典工艺学院学了四年绘画。 契里柯主要在慕尼黑受到最初的美术教育， 对德国世纪末画家斐克林、克林格尔等人的作品深为喜爱。</font>
+            </p>
+            <img src="../../images/hmc-bowen-img.jpg" />
+            <p><font>同时，弗洛伊德精神分析学说和他对绘画艺术中表现直觉、幻觉和潜意识意象的研究， 对于人类感情现象的研究，在德国画家中的影响是十分广泛的。</font>
+            </p>
+            <p><font>对于他走上形而上绘画的决定的因素，乃是叔本华和尼采的哲学。</font>
+            </p>
+        </div>
+        <div class="list-r4"></div>
+        <div class="mycollect-list message-list">
+            <ul>
+
+                <li>
+                    <a href="#" class="user-photo-c"><img src="../../images/hmc-touxiang.png">
+                    </a>
+                    <div class="user-name">
+                        <a href="#"><font>陈小兰</font></a>
+                        <p><font>最近比较烦比较烦</font>
+                        </p>
+                        <div class="message-time"><font>2015-03-28 15：38</font>
+                        </div>
+                    </div>
+                    <div class="message-two">
+                        <i></i>
+                        <ul>
+                            <li>
+                                <a href="#" class="user-photo-c"><img src="../../images/hmc-touxiang.png">
+                                </a>
+                                <div class="message-cont">
+                                    <a href="#"><font>我</font></a>
+                                    <font>淡定、淡定</font>
+                                    <div class="message-time"><font>2015-03-28 15：38</font>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" class="user-photo-c"><img src="../../images/hmc-touxiang.png">
+                    </a>
+                    <div class="user-name">
+                        <a href="#"><font>陈小兰</font></a>
+                        <p><font>最近比较烦比较烦</font>
+                        </p>
+                        <div class="message-time"><font>2015-03-28 15：38</font>
+                        </div>
+                    </div>
+                    <div class="message-two">
+                        <i></i>
+                        <ul>
+                            <li>
+                                <a href="#" class="user-photo-c"><img src="../../images/hmc-touxiang.png">
+                                </a>
+                                <div class="message-cont">
+                                    <a href="#"><font>我</font></a>
+                                    <font>淡定、淡定</font>
+                                    <div class="message-time"><font>2015-03-28 15：38</font>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#" class="user-photo-c"><img src="../../images/hmc-touxiang.png">
+                                </a>
+                                <div class="message-cont">
+                                    <a href="#"><font>我</font></a>
+                                    <font>淡定、淡定</font>
+                                    <div class="message-time"><font>2015-03-28 15：38</font>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" class="user-photo-c"><img src="../../images/hmc-touxiang.png">
+                    </a>
+                    <div class="user-name">
+                        <a href="#"><font>陈小兰</font></a>
+                        <p><font>最近比较烦比较烦</font>
+                        </p>
+                        <div class="message-time"><font>2015-03-28 15：38</font>
+                        </div>
+                    </div>
+                    <div class="message-two">
+                        <i></i>
+                        <ul>
+                            <li>
+                                <a href="#" class="user-photo-c"><img src="../../images/hmc-touxiang.png">
+                                </a>
+                                <div class="message-cont">
+                                    <a href="#"><font>我</font></a>
+                                    <font>淡定、淡定</font>
+                                    <div class="message-time"><font>2015-03-28 15：38</font>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#" class="user-photo-c"><img src="../../images/hmc-touxiang.png">
+                                </a>
+                                <div class="message-cont">
+                                    <a href="#"><font>我</font></a>
+                                    <font>淡定、淡定</font>
+                                    <div class="message-time"><font>2015-03-28 15：38</font>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+   
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+		
+	};
+</script>
+</html>

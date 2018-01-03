@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>APICloud APP</title>
+        <link rel="stylesheet" type="text/css" href="../css/main.css" />
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+        html,
+            body {
+                height: 100%;
+                display: flex;
+                display: -webkit-flex;
+                display: -webkit-box;
+                flex-flow: column;
+                -webkit-flex-flow: column;
+                -webkit-box-orient: vertical;
+            }
+            .content {
+                    -webkit-flex: 1px;
+                    flex: 1px;
+                    -webkit-box-flex: 1;
+                    background-color: #f4f5f6;
+                }
+        </style>
+    </head>
+
+    <body>
+       <section class="content"></section>
+    </body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript">
+        apiready = function() {
+           var storage = $api.getStorage('user');
+           if(!storage){
+             api.openWin({
+	             name: 'loginWin',
+	             url: 'login/login_win.html'
+             });
+           }else{
+             api.openWin({
+	             name: 'home',
+	             url: 'home/index.html'
+             });
+           }
+        };
+    </script>
+
+</html>

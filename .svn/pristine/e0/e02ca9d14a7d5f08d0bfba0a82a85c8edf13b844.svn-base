@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../zui/css/mzui.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/layer.css" />
+		<style media="screen">
+			.hi-title {
+				font-size: 0.7 rem;
+				font-weight: bold;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="section" id="app">
+			<div class="list" v-for="data in list">
+				<div class="item with-avatar multi-lines" >
+					<div class="avatar circle">
+						<img :src="data.author.avatar" />
+					</div>
+					<div class="content">
+						<div class="title">
+							{{data.author.username}} <small class="text-red pull-right">标签</small>
+							<small class="text-red pull-right">我的</small>
+						</div>
+						<div class="subtitle space-sm">
+							{{time(data.createdAt)}}
+						</div>
+						<div class="row">
+							<div class="cell-12" v-if="data.img.length==0">
+								<div class="hi-title" @click="detail(data)">
+									{{data.title}}
+								</div>
+							</div>
+							<div class="cell-8" v-if="data.img.length>0">
+								<div class="hi-title" @click="detail(data)">
+									{{data.title}}
+								</div>
+							</div>
+							<div class="cell-4" v-if="data.img.length>0" style="height:4.5rem">
+								<img class="rounded-lg" :src="data.img[0]" alt="" @click="detail(data)">
+							</div>
+						</div>
+						<div class="">
+							<small>阅读{{data.view}}喜欢{{data.like}}收藏{{data.store}}</small>
+						</div>
+					</div>
+				</div>
+				<div class="divider"></div>
+			
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/config.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/moment.js"></script>
+	<script type="text/javascript" src="../../script/vue.js"></script>
+	<script type="text/javascript" src="../../script/layer.js"></script>
+	<script type="text/javascript" src="../api/article.js"></script>
+	<script type="text/javascript" src="../api/api.js"></script>
+	<script type="text/javascript">
+		
+		apiready = function() {
+			getConfig();
+			app.init();
+			//下拉刷新
+			api.setRefreshHeaderInfo({
+				visible : true,
+				loadingImg : 'widget://image/refresh.png',
+				bgColor : '#ccc',
+				textColor : '#fff',
+				textDown : '下拉刷新...',
+				textUp : '松开刷新...',
+				showTime : true
+			}, function(ret, err) {
+				app.pageNum = 1;
+				app.init();
+				setInterval("api.refreshHeaderLoadDone()", '1000');
+			});
+			//上拉加载
+			api.addEventListener({
+				name : 'scrolltobottom',
+				extra : {
+					threshold : 0 //设置距离底部多少距离时触发，默认值为0，数字类型
+				}
+			}, function(ret, err) {
+				if (err) {
+				} else {
+					app.pageNum = app.pageNum + 1;
+					app.init();
+				}
+			});
+		};
+
+	
+		var app = new Vue({
+			el : '#app',
+			data : {
+				list : [],
+				pageSize : 10,
+				pageNum : 1
+			},
+			methods : {
+				detail : function(data) {
+				    record('article',data.id,'view',function(ret,err){
+				     
+				    });
+					api.openWin({
+						name : '文章详情',
+						url : 'detail.html',
+						pageParam : data
+					});
+				},
+				init : function() {
+					api.showProgress({
+						text : '稍等一会...',
+						modal : true
+					});
+					getPage(app.pageSize, app.pageNum, function(ret, err) {
+						if (err) {
+						} else {
+							if (app.pageNum == 1) {
+								app.list = [];
+								if (ret != null && ret.length > 0) {
+									for (var i = 0; i < ret.length; i++) {
+										app.list.push(ret[i]);
+									}
+								}
+							} else {
+								if (ret != null && ret.length > 0) {
+									for (var i = 0; i < ret.length; i++) {
+										app.list.push(ret[i]);
+									}
+								}
+							}
+							api.hideProgress();
+						}
+					});
+				},
+				time : function(time) {
+					return fromNow(time, 'YYYY-MM-DD h:mm:ss', 'minute');
+				}
+			}
+		})
+	</script>
+</html>

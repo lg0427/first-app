@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../zui/css/mzui.css"/>
+		<style>
+			.hi-title {
+				font-size: 14px;
+				font-weight: bold;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div class="list with-divider">
+				<div class="item" @click="changePhoto()">
+					<div class="title hi-title">
+						更换头像
+					</div>
+					<div class="avatar circle" @click="changePhoto()"><img :src="me.avatar" alt="">
+					</div>
+				</div>
+				<div class="item" @click="changeName()">
+					<div class="title hi-title">
+						更改昵称
+					</div>
+					<i class="muted">{{me.username}}</i>
+				</div>
+				<div class="item" @click="changeDes()">
+					<div class="title hi-title">
+						编辑个人简介
+					</div>
+					<i class="icon icon-chevron-right muted"></i>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../api/api.js"></script>
+	<script type="text/javascript" src="../../script/vue.js"></script>
+	<script type="text/javascript">
+		var model = null;
+		var query = null;
+		var photoSelect = null;
+		var dialogBox = null;
+		apiready = function() {
+			query = api.require('query');
+			model = api.require('model');
+			photoSelect = api.require('photoSelect');
+			dialogBox = api.require('dialogBox');
+			model.config({
+				appKey : 'E8D5FCA6-B96C-0755-D177-1BC3254CF38D',
+				host : 'https://d.apicloud.com'
+			});
+			app.init();
+		};
+		var app = new Vue({
+			el : '#app',
+			data : {
+				me : {}
+			},
+			methods : {
+				init : function() {
+					var _this = this;
+					findById('user', $api.getStorage('user').id, function(ret, err) {
+						if (err) {
+						} else {
+							_this.me = ret;
+						}
+					});
+				},
+				changePhoto : function() {
+					var _this = this;
+					photoSelect.openAblum({
+						permitnum : '1'
+					}, function(ret, err) {
+						if (err) {
+							alert(JSON.stringify(err));
+						} else {
+							uploadFile(ret.selectpic[0], function(ret, err) {
+								if (err) {
+								} else {
+									//更新头像地址
+									updateById('user', _this.me.id, {
+										avatar : ret.url
+									}, function(ret, err) {
+										if (err) {
+										} else {
+											_this.init();
+										}
+									})
+								}
+							})
+						}
+					});
+				},
+				changeName : function() {
+					var _this = this;
+					dialogBox.input({
+						keyboardType : 'default',
+						texts : {
+							title : '修改昵称',
+							default : _this.me.username,
+							leftBtnTitle : '取消',
+							rightBtnTitle : '确定'
+						},
+						styles : {
+							bg : '#fff',
+							corner : 2,
+							w : 300,
+							h : 160,
+							title : {
+								h : 60,
+								alignment : 'left',
+								size : 16,
+								color : '#FF5555'
+							},
+							input : {
+								h : 60,
+								marginT : 1,
+								textSize : 14,
+								textColor : '#000'
+							},
+							dividingLine : {
+								width : 1,
+								color : '#FF5555'
+							},
+							left : {
+								bg : 'rgba(0,0,0,0)',
+								color : '#007FFF',
+								size : 12
+							},
+							right : {
+								bg : 'rgba(0,0,0,0)',
+								color : '#007FFF',
+								size : 12
+							}
+						}
+					}, function(ret) {
+						if (ret.eventType == 'left') {
+							var dialogBox = api.require('dialogBox');
+							dialogBox.close({
+								dialogName : 'input'
+							});
+						} else {
+							updateById('user', $api.getStorage('user').id, {
+								username : ret.text
+							}, function(ret, err) {
+								if (err) {
+								} else {
+									_this.init();
+									var dialogBox = api.require('dialogBox');
+									dialogBox.close({
+										dialogName : 'input'
+									});
+								}
+							})
+						}
+					});
+				},
+				changeDes : function() {
+					api.openWin({
+						name : '编辑个人简介',
+						url : 'des_win.html'
+					});
+				}
+			}
+		});
+	</script>
+</html>

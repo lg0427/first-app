@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<title>APICloud APP</title>
+		<link rel="stylesheet" type="text/css" href="../../css/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<style>
+		.hi-photo img{
+		   margin: 0 auto;
+		   border-radius: 60px;
+		   width:100%;
+		   height:100px;
+		}
+		.hi-right{
+		float:right;
+		}
+		</style>
+	</head>
+	<body>
+	    
+		<div class="main">
+		<div class="top-img-jack">
+			<i style="background: url(../../images/read_girl.png) no-repeat center;">
+			<div class="round-read-girl">
+				<i class="hi-photo"><img src="../../images/photo1.png" /></i>
+				<div class="power-name">
+					<span><font>Mike</font></span>
+					<i> <span><font>LV1</font></span> </i>
+				</div>
+				<div class="power-name">
+					<span><font>我骨子里是清高的,我卑微但是不卑贱.我骨子里是清高的,我卑微但是不卑贱.</font></span>
+				</div>
+			</div> 
+			
+			</i>
+		</div>
+		
+		<div class="intel-content-jack">
+			<ul>
+			    <li class="clear">
+					<i class="intelnet-img-jack"><img src="../../icon/problem1.png"/></i>
+					<span><font><b>公开问题</b></font></span>
+					<i class="hi-right">7</i>
+				</li>
+				<li class="clear">
+					<i class="intelnet-img-jack"><img src="../../icon/problem2.png"/></i>
+					<span><font><b>私密问题</b></font></span>
+					<i class="hi-right">7</i>
+				</li>
+				<li class="clear">
+					<i class="intelnet-img-jack"><img src="../../icon/article2.png"/></i>
+					<span><font><b>公开文章</b></font></span>
+					<i class="hi-right">7</i>
+				</li>
+				<li class="clear">
+					<i class="intelnet-img-jack"><img src="../../icon/article1.png"/></i>
+					<span><font><b>私密文章</b></font></span>
+					<i class="hi-right">7</i>
+				</li>
+				<li class="clear">
+					<i class="intelnet-img-jack"><img src="../../icon/dayliy1.png"/></i>
+					<span><font><b>公开日记</b></font></span>
+					<i class="hi-right">7</i>
+				</li>
+				<li class="clear">
+					<i class="intelnet-img-jack"><img src="../../icon/dayly2.png"/></i>
+					<span><font><b>私密日记</b></font></span>
+					<i class="hi-right">7</i>
+				</li>
+				
+			</ul>
+		</div>
+		<div class="local-school-jack">
+			<span><font>标签档案</font></span>
+		</div>
+		<div class="bg-white-jack">
+			<ul>
+				<li class="clear">
+					<div class="school-local-jack">
+						<span><font>位置</font></span>
+						<font>四川，成都</font>
+					</div>
+				</li>
+				<li class="clear">
+					<div class="school-local-jack">
+						<span><font>专业</font></span>
+						<font>计算机</font>
+					</div>
+				</li>
+				<li class="clear">
+					<div class="school-local-jack">
+						<span><font>领域</font></span>
+						<font>互联网</font>
+					</div>
+				</li>
+				<li class="clear">
+					<div class="school-local-jack">
+						<span><font>学校</font></span>
+						<font>西华大学</font>
+					</div>
+				</li>
+				<li class="clear">
+					<div class="school-local-jack clear">
+						<span><font>标签</font></span>
+						<font>逗逼，工作狂，阳光，帅气</font>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="edit-data-jack">
+			<span><font>退出登陆</font></span>
+		</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+		}
+	</script>
+</html>

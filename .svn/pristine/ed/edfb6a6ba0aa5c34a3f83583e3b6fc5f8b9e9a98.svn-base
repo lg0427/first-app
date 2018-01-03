@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>APICloud APP</title>
+        <link rel="stylesheet" type="text/css" href="../css/main.css" />
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+        html,
+            body {
+                height: 100%;
+                display: flex;
+                display: -webkit-flex;
+                display: -webkit-box;
+                flex-flow: column;
+                -webkit-flex-flow: column;
+                -webkit-box-orient: vertical;
+            }
+            .content {
+                    -webkit-flex: 1px;
+                    flex: 1px;
+                    -webkit-box-flex: 1;
+                    background-color: #f4f5f6;
+                }
+        </style>
+    </head>
+
+    <body>
+       <section class="content"></section>
+        <nav>
+        <ul style="padding:0.625em 0;">
+            <li class="on">
+                <i class="icon-nav-team"></i>
+                <font>杂货铺</font>
+            </li>
+            <li>
+                <i class="icon-nav-home"></i>
+                <font>发现</font>
+            </li>
+            <li>
+                <div>
+                </div>
+            </li>
+            <li>
+                <i class="icon-nav-message"></i>
+                <font>消息</font>
+            </li>
+            <li>
+                <i class="icon-nav-user"></i>
+                <font>我的</font>
+            </li>
+        </ul>
+      </nav>
+    </body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript">
+        apiready = function() {
+           var storage = window.localStorage;
+           if(!storage.currentUser){
+             api.openWin({
+	             name: 'loginWin',
+	             url: 'login/login_win.html'
+             });
+           }
+        };
+    </script>
+
+</html>

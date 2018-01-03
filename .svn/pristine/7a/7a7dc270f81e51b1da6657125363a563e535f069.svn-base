@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title></title>
+     <link rel="stylesheet" type="text/css" href="../../zui/css/mzui.css" />
+  </head>
+  <body>
+  <section id="app">
+    <div class="list with-divider">
+      <a class="item with-avatar">
+        <div class="avatar circle red"><i class="icon-volume-up"></i></div>
+        <div class="title">答复</div>
+        <span class="label badge red circle">2</span>
+      </a>
+      <a class="item with-avatar">
+        <div class="avatar circle red"><i class="icon icon-wechat"></i></div>
+        <div class="title">聊天</div>
+        <i class="icon icon-chevron-right muted"></i>
+      </a>
+      <a class="item with-avatar" @click="comments()">
+        <div class="avatar circle red"><i class="icon icon-quote-left"></i></div>
+        <div class="title">评论</div>
+        <span class="label badge red circle" v-if="commentNum>0">{{commentNum}}</span>
+      </a>
+      <a class="item with-avatar" @click="stores()">
+        <div class="avatar circle red"><i class="icon-heart"></i></div>
+        <div class="title">收藏</div>
+        <span class="label badge red circle" v-if="storeNum>0">{{storeNum}}</span>
+      </a>
+      <a class="item with-avatar" @click="attens()">
+        <div class="avatar circle red"><i class="icon-star"></i></div>
+        <div class="title">关注</div>
+        <span class="label badge red circle" v-if="attenNum>0">{{attenNum}}</span>
+      </a>
+    </div>
+</section>
+  </body>
+  <script type="text/javascript" src="../../script/config.js"></script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
+	<script type="text/javascript" src="../../script/moment.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../api/api.js"></script>
+	<script type="text/javascript" src="../api/toast.js"></script>
+	<script>
+		apiready = function() {
+			getConfig();
+			app.init();
+			//下拉刷新
+			api.setRefreshHeaderInfo({
+				visible : true,
+				loadingImg : 'widget://image/refresh.png',
+				bgColor : '#ccc',
+				textColor : '#fff',
+				textDown : '下拉刷新...',
+				textUp : '松开刷新...',
+				showTime : true
+			}, function(ret, err) {
+				app.init();
+				setInterval("api.refreshHeaderLoadDone()", '1000');
+			});
+		
+		};
+		var app = new Vue({
+		   el: '#app',
+		   data:{
+		      storeNum: 0,
+		      attenNum: 0,
+		      commentNum: 0
+		   },
+		   methods: {
+		     init: function(){
+		        var _this = this;
+		        getAttenNum($api.getStorage('user').id,function(ret,err){
+		           if(err){
+		           }else{
+		             _this.attenNum = ret.length;
+		           }
+		        });
+		        getCommentNum($api.getStorage('user').id,function(ret,err){
+		           if(err){
+		           }else{
+		             _this.commentNum = ret.length;
+		           }
+		        });
+		        getStoreNum($api.getStorage('user').id,function(ret,err){
+		           if(err){
+		           }else{
+		             _this.storeNum = ret.length;
+		           }
+		        });
+		     },
+		     stores: function(){
+		        api.openWin({
+	                name: '收藏消息',
+	                url: '../mess/store_mess.html'
+                });
+		     },
+		     attens: function(){
+		        api.openWin({
+	                name: '关注消息',
+	                url: '../mess/atten_mess.html'
+                });
+		     },
+		     comments: function(){
+		        api.openWin({
+	                name: '评论消息',
+	                url: '../mess/comment_mess.html'
+                });
+		     }
+		   }
+		  
+		})
+		</script>
+</html>
